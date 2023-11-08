@@ -38,8 +38,14 @@ public:
 protected:
 	HENHMETAFILE mf_cactus;
 	HENHMETAFILE mf_cactus_light;
+	float m_cactusSmallRotation;
+	float m_cactusFullRotation;
+	
+	void DrawCactusPart(CDC* pDC, CPoint nodeCenter, int partCount, float angle, bool start, bool light = false);
 
-	void DrawCactusPart(CDC* pDC, CPoint center, float scaleWidth, float scaleHeight, float rotation);
+
+	void DrawNodes(CDC* pDC);
+	void DrawFigureBetter(CDC* pDC);
 	void DrawFigure(CDC* pDC);
 	void Translate(CDC* pDC, float dX, float dY, bool rightMultiply);
 	void Scale(CDC* pDC, float sX, float sY, bool rightMultiply);
@@ -47,6 +53,8 @@ protected:
 // Generated message map functions
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
 #ifndef _DEBUG  // debug version in IND_18077View.cpp
