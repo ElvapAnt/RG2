@@ -40,7 +40,8 @@ protected:
 	HENHMETAFILE mf_cactus_light;
 	float m_cactusSmallRotation;
 	float m_cactusFullRotation;
-	
+	bool m_grid_hit;
+
 	void DrawCactusPart(CDC* pDC, CPoint nodeCenter, int partCount, float angle, bool start, bool light = false);
 
 

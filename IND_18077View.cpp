@@ -34,6 +34,7 @@ END_MESSAGE_MAP()
 
 CIND18077View::CIND18077View() noexcept
 {
+	m_grid_hit = false;
 	m_cactusSmallRotation = 0.0f;
 	m_cactusFullRotation = 0.0f;
 	mf_cactus_light = ::GetEnhMetaFile(_T("cactus_part_light.emf"));
@@ -67,7 +68,6 @@ void CIND18077View::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
-
 	CPoint rootNodeCenter(250, 425);
 	CBrush potBrush(RGB(222, 148, 0));
 	CPen outlinePen(PS_SOLID, 1, RGB(0, 0, 0));
@@ -79,17 +79,10 @@ void CIND18077View::OnDraw(CDC* pDC)
 
 	int savedDC = pDC->SaveDC();
 	pDC->SetGraphicsMode(GM_ADVANCED);
-	Translate(pDC, rootNodeCenter.x, rootNodeCenter.y, true);
-	Rotate(pDC, m_cactusFullRotation, false);
-	Translate(pDC, -rootNodeCenter.x, -rootNodeCenter.y, false);
-	DrawFigureBetter(pDC);
-	pDC->RestoreDC(savedDC);
-
-	savedDC = pDC->SaveDC();
-	pDC->SetGraphicsMode(GM_ADVANCED);
 	Translate(pDC, rootNodeCenter.x, rootNodeCenter.y, false);
 	Rotate(pDC, m_cactusFullRotation, false);
 	Translate(pDC, -rootNodeCenter.x, -rootNodeCenter.y, false);
+	DrawFigureBetter(pDC);
 	DrawNodes(pDC);
 	pDC->RestoreDC(savedDC);
 
@@ -119,6 +112,30 @@ void CIND18077View::OnDraw(CDC* pDC)
 	pDC->SetBkMode(nOldMode);
 	pDC->RestoreDC(savedDC);
 
+	if (m_grid_hit)
+	{
+		CPen pen(PS_SOLID, 2, RGB(234, 234, 234));
+		pDC->SetBkMode(TRANSPARENT);
+		CPen* oldPen = pDC->SelectObject(&pen);
+
+		int gridCellSize = 25;
+		int width = 500;
+		int height = 500;
+
+		for (int x = 0; x <= width; x += gridCellSize)
+		{
+			pDC->MoveTo(x, 0);
+			pDC->LineTo(x, height);
+		}
+		for (int y = 0; y <= height; y += gridCellSize)
+		{
+			pDC->MoveTo(0, y);
+			pDC->LineTo(width, y);
+		}
+
+		pDC->SelectObject(oldPen);
+
+	}
 }
 // CIND18077View printing
 
@@ -153,8 +170,6 @@ void CIND18077View::Dump(CDumpContext& dc) const
 }
 
 
-
-
 void CIND18077View::DrawFigureBetter(CDC* pDC)
 {
 	pDC->SetGraphicsMode(GM_ADVANCED);
@@ -179,7 +194,7 @@ void CIND18077View::DrawCactusPart(CDC* pDC, CPoint nodeCenter, int partCount, f
 		Translate(pDC, nodeCenter.x, nodeCenter.y, false);
 		Rotate(pDC, rotAngle, false);
 		Scale(pDC, scaleWidth, scaleHeight, false);
-		pDC->PlayMetaFile(mf_cactus, CRect(-50, -100, 50, 0));
+		pDC->PlayMetaFile(mf_cactus_light, CRect(-50, -100, 50, 0));
 		pDC->RestoreDC(savedDC);
 	}
 	else {
@@ -189,7 +204,7 @@ void CIND18077View::DrawCactusPart(CDC* pDC, CPoint nodeCenter, int partCount, f
 				Translate(pDC, nodeCenter.x, nodeCenter.y, false);
 				Rotate(pDC, m_cactusSmallRotation, false);
 				Scale(pDC, scaleWidth, scaleHeight, false);
-				pDC->PlayMetaFile(mf_cactus, CRect(-50, -100, 50, 0));
+				pDC->PlayMetaFile(mf_cactus_light, CRect(-50, -100, 50, 0));
 				light = false;
 			}
 			else {
@@ -223,111 +238,6 @@ void CIND18077View::DrawNodes(CDC* pDC)
 	pDC->Ellipse(380 - 10, 295 - 10, 380 + 10, 295 + 10);
 	//node5 190,225
 	pDC->Ellipse(190 - 10, 225 - 10, 190 + 10, 225 + 10);
-}
-
-
-void CIND18077View::DrawFigure(CDC* pDC)
-{
-	pDC->SetGraphicsMode(GM_ADVANCED);
-	
-	int savedDC = pDC->SaveDC();
-	Translate(pDC, 152, 142, true);
-	Rotate(pDC, 0, true);
-	Scale(pDC, 0.75, 0.85, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 190-22, 295-73, true);
-	Rotate(pDC, 0, true);
-	Scale(pDC, 0.45, 0.75, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 190, 295-25, true);
-	Rotate(pDC, 90, false);
-	Scale(pDC, 0.45, 0.75, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 380-20, 295+15, true);
-	Rotate(pDC, 315, false);
-	Scale(pDC, 0.45, 0.75, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 380+15, 295+20, true);
-	Rotate(pDC, 225, false);
-	Scale(pDC, 0.45, 0.75, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 250+12, 350+5, true);
-	Rotate(pDC, 180, false);
-	Scale(pDC, 0.25, 0.85, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 310 - 2, 295 + 25, true);
-	Rotate(pDC, 270, false);
-	Scale(pDC, 0.45, 0.75, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 250+8, 350+12, true);
-	Rotate(pDC, 225, false);
-	Scale(pDC, 0.25, 0.85, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 310, 295, true);
-	Rotate(pDC, m_cactusSmallRotation, false);
-	Scale(pDC, 0.45, 0.75, false);
-	pDC->PlayMetaFile(mf_cactus_light, CRect(-50, -100, 50, 0));
-	pDC->RestoreDC(savedDC);
-
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 250 + 12, 350 + 5, true);
-	Rotate(pDC, 180, false);
-	Scale(pDC, 0.25, 0.85, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 250+8, 350-5, true);
-	Rotate(pDC, 135, false);
-	Scale(pDC, 0.25, 0.85, false);
-	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	//na ovaj se rotira ceo kaktus :
-	savedDC = pDC->SaveDC();
-	Translate(pDC, 250-38, 425-80, true);
-	Rotate(pDC, 0, true);
-	Scale(pDC, 0.75, 0.85, false);
-	pDC->PlayMetaFile(mf_cactus_light, CRect(0, 0, 100, 100));
-	pDC->RestoreDC(savedDC);
-
-	int savedState = pDC->SaveDC();
-	CBrush greenBrush(RGB(0, 204, 0));
-	pDC->SelectObject(&greenBrush);
-	pDC->Ellipse(250 - 10, 425 - 10, 250 + 10, 425 + 10);
-	pDC->Ellipse(250 - 10, 350 - 10, 250 + 10, 350 + 10);
-	pDC->Ellipse(310 - 10, 295 - 10, 310 + 10, 295 + 10);
-	pDC->Ellipse(190 - 10, 295 - 10, 190 + 10, 295 + 10);
-	pDC->Ellipse(380 - 10, 295 - 10, 380 + 10, 295 + 10);
-	pDC->Ellipse(190 - 10, 225 - 10, 190 + 10, 225 + 10);
-
-	pDC->RestoreDC(savedState);
 }
 
 void CIND18077View::Translate(CDC* pDC, float dX, float dY, bool rightMultiply)
@@ -392,6 +302,13 @@ void CIND18077View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	else if (m_cactusFullRotation < 0.0f) {
 		m_cactusFullRotation += 360.0f;
 	}
+
+	if (nChar == VK_SPACE)
+	{
+		m_grid_hit = !m_grid_hit;
+		Invalidate();
+	}
+
 
 	Invalidate();
 	UpdateWindow();
