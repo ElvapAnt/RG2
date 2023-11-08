@@ -116,49 +116,49 @@ void CIND18077View::DrawFigure(CDC* pDC)
 	Translate(pDC, 152, 142, true);
 	Rotate(pDC, 0, true);
 	Scale(pDC, 0.75, 0.85, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 
 	savedDC = pDC->SaveDC();
 	Translate(pDC, 190-22, 295-73, true);
 	Rotate(pDC, 0, true);
 	Scale(pDC, 0.45, 0.75, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 
 	savedDC = pDC->SaveDC();
 	Translate(pDC, 310 - 22, 295 - 73, true);
 	Rotate(pDC, 0, true);
 	Scale(pDC, 0.45, 0.75, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus_light, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 
 	savedDC = pDC->SaveDC();
 	Translate(pDC, 190, 295-25, true);
 	Rotate(pDC, 90, false);
 	Scale(pDC, 0.45, 0.75, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 
 	savedDC = pDC->SaveDC();
 	Translate(pDC, 310-2, 295+25, true);
 	Rotate(pDC, 270, false);
 	Scale(pDC, 0.45, 0.75, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 
 	savedDC = pDC->SaveDC();
 	Translate(pDC, 380-20, 295+15, true);
 	Rotate(pDC, 315, false);
 	Scale(pDC, 0.45, 0.75, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 
 	savedDC = pDC->SaveDC();
 	Translate(pDC, 380+15, 295+20, true);
 	Rotate(pDC, 225, false);
 	Scale(pDC, 0.45, 0.75, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 
 
@@ -167,19 +167,19 @@ void CIND18077View::DrawFigure(CDC* pDC)
 	Translate(pDC, 250+12, 350+5, true);
 	Rotate(pDC, 180, false);
 	Scale(pDC, 0.25, 0.85, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 	savedDC = pDC->SaveDC();
 	Translate(pDC, 250+8, 350+12, true);
 	Rotate(pDC, 225, false);
 	Scale(pDC, 0.25, 0.85, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 	savedDC = pDC->SaveDC();
 	Translate(pDC, 250+8, 350-5, true);
 	Rotate(pDC, 135, false);
 	Scale(pDC, 0.25, 0.85, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 
 	//na ovaj se rotira ceo kaktus :
@@ -187,7 +187,7 @@ void CIND18077View::DrawFigure(CDC* pDC)
 	Translate(pDC, 250-38, 425-80, true);
 	Rotate(pDC, 0, true);
 	Scale(pDC, 0.75, 0.85, false);
-	::PlayEnhMetaFile(pDC->GetSafeHdc(), mf_cactus_light, CRect(0, 0, 100, 100));
+	pDC->PlayMetaFile(mf_cactus, CRect(0, 0, 100, 100));
 	pDC->RestoreDC(savedDC);
 
 	CBrush potBrush(RGB(222, 148, 0));
